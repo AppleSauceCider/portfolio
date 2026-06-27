@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rudra Raval</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F9F8F6;
+      --surface: #FFFFFF;
+      --ink: #1A1916;
+      --ink-muted: #6B6860;
+      --ink-faint: #C4C2BC;
+      --accent: #2D6A4F;
+      --accent-light: #E8F2ED;
+      --border: #E8E6E1;
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
+    }
+
+    html[data-theme="dark"] {
+      --bg: #141412;
+      --surface: #1E1D1A;
+      --ink: #F0EDE8;
+      --ink-muted: #9C9890;
+      --ink-faint: #4A4844;
+      --accent: #4ADE80;
+      --accent-light: #1A2E22;
+      --border: #2A2826;
+    }
+
+    html[data-theme="dark"] nav {
+      background: rgba(20,20,18,0.92);
+    }
+
+    /* THEME TOGGLE */
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      color: var(--ink-muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .theme-toggle:hover {
+      color: var(--ink);
+      border-color: var(--ink-muted);
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      background: rgba(249,248,246,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.15s;
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--accent);
+      border-radius: 1px;
+    }
+
+    /* LAYOUT */
+    section {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 120px 24px;
+    }
+
+    .divider {
+      width: 100%;
+      max-width: 780px;
+      margin: 0 auto;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 36px;
+    }
+
+    /* HERO */
+    #hero {
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 120px;
+      padding-bottom: 100px;
+    }
+
+    .hero-name {
+      font-size: clamp(48px, 8vw, 80px);
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      line-height: 1.0;
+      color: var(--ink);
+      margin-bottom: 32px;
+    }
+
+    .hero-details {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+
+    .hero-detail-row {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .hero-detail-key {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      width: 100px;
+      flex-shrink: 0;
+    }
+
+    .hero-detail-val {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink-muted);
+    }
+
+    .hero-detail-val a {
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .hero-detail-val a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      font-size: 13px;
+      font-weight: 400;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.15s;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    .btn-primary:hover { background: var(--accent); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover { border-color: var(--ink-muted); color: var(--ink); }
+
+    /* EDUCATION */
+    .edu-block {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 32px;
+    }
+
+    .edu-meta { padding-top: 2px; }
+
+    .edu-date {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-faint);
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+    }
+
+    .edu-school {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+
+    .edu-degree {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .edu-facts {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .edu-fact {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink-muted);
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.65;
+    }
+
+    .edu-fact::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--ink-faint);
+      font-size: 12px;
+    }
+
+    .edu-coursework-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 10px;
+    }
+
+    .edu-courses {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* ABOUT */
+    .about-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink-muted);
+      line-height: 1.75;
+      margin-bottom: 14px;
+    }
+
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .about-facts {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .fact-row {
+      display: flex;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .fact-row:last-child { border-bottom: none; }
+
+    .fact-key {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      width: 90px;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    .fact-val {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* PROJECTS */
+    .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .project-card {
+      background: var(--surface);
+      padding: 28px 32px;
+      transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .project-card:hover { background: var(--accent-light); }
+
+    .project-card-static {
+      cursor: default;
+      background: var(--bg);
+      border-left: 3px solid var(--accent);
+      padding-left: 29px;
+      opacity: 1;
+    }
+    .project-card-static:hover { background: var(--bg); }
+
+    /* Project subheadings */
+    .projects-subheading {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      padding: 12px 32px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* Focus visible */
+    .btn:focus-visible,
+    .theme-toggle:focus-visible,
+    .project-card:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .project-name {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .project-arrow {
+      color: var(--ink-faint);
+      font-size: 16px;
+      transition: color 0.15s, transform 0.15s;
+    }
+
+    .project-card:hover .project-arrow {
+      color: var(--accent);
+      transform: translate(2px, -2px);
+    }
+
+    .project-badge {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-faint);
+      letter-spacing: 0.04em;
+    }
+
+    .project-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink-muted);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 3px 9px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--ink-muted);
+      transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* EXPERIENCE */
+    .experience-list {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 32px;
+    }
+
+    .exp-meta { padding-top: 2px; }
+
+    .exp-date {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-faint);
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+    }
+
+    .exp-company {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+
+    .exp-role {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .exp-bullets li {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink-muted);
+      line-height: 1.65;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .exp-bullets li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--ink-faint);
+      font-size: 12px;
+    }
+
+    .exp-divider {
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* CONTACT */
+    #contact { padding-bottom: 140px; }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 14px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .contact-link:hover { color: var(--accent); }
+
+    .contact-link-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      width: 76px;
+      color: var(--ink-faint);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-note {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-faint);
+      letter-spacing: 0.04em;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      nav { padding: 0 24px; }
+      .nav-links { gap: 20px; }
+      .about-body { grid-template-columns: 1fr; }
+      .exp-item { grid-template-columns: 1fr; gap: 8px; }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="#hero">Rudra Raval</a>
+    <div style="display:flex; align-items:center; gap:28px;">
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <span id="themeIcon">☾</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <h1 class="hero-name">Rudra Raval</h1>
+    <div class="hero-details">
+      <div class="hero-detail-row">
+        <span class="hero-detail-key">Currently</span>
+        <span class="hero-detail-val">Innovation & Emerging Tech Intern, NRECA &mdash; Arlington, VA</span>
+      </div>
+      <div class="hero-detail-row">
+        <span class="hero-detail-key">Education</span>
+        <span class="hero-detail-val">B.S. Computer Science & Information Systems, University of Maryland</span>
+      </div>
+      <div class="hero-detail-row">
+        <span class="hero-detail-key">Based in</span>
+        <span class="hero-detail-val">College Park, MD</span>
+      </div>
+    </div>
+    <div class="hero-links">
+      <a class="btn btn-primary" href="mailto:rudramraval@gmail.com">Get in touch</a>
+      <a class="btn btn-secondary" href="https://github.com/AppleSauceCider" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-secondary" href="https://www.linkedin.com/in/rudra-m-raval/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">About</p>
+    <div class="about-body">
+      <div class="about-text">
+        <p>
+          I'm a sophomore at the University of Maryland pursuing a double degree in Computer Science and Information Systems. My work spans full-stack development, mobile engineering, and AI/ML tooling.
+        </p>
+        <p>
+          Outside of software, I'm interested in policy, economics, and the broader systems that technology operates within. I enjoy working at the intersection of technical and non-technical domains.
+        </p>
+      </div>
+      <div class="about-facts">
+        <div class="fact-row">
+          <span class="fact-key">Degree</span>
+          <span class="fact-val">CS & Information Systems (double)</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-key">School</span>
+          <span class="fact-val">University of Maryland</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-key">Grad</span>
+          <span class="fact-val">May 2028</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-key">Focus</span>
+          <span class="fact-val">Full-stack, AI engineering, cloud</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-key">Skills</span>
+          <span class="fact-val">TypeScript, Python, C, OCaml, Rust, Java, SQL</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <p class="section-label">Education</p>
+    <div class="edu-block">
+      <div class="edu-meta">
+        <div class="edu-date">Aug. 2024 &mdash; May 2028</div>
+        <div class="edu-school">UMD</div>
+      </div>
+      <div>
+        <div class="edu-degree">B.S. Computer Science & Information Systems</div>
+        <div class="edu-facts">
+          <span class="edu-fact">GPA: 3.75</span>
+          <span class="edu-fact">Scholars Program</span>
+          <span class="edu-fact">Dean's List recipient</span>
+        </div>
+        <div class="edu-coursework-label">Relevant Coursework</div>
+        <div class="edu-courses">
+          <span class="tag">Data Structures</span>
+          <span class="tag">Algorithms</span>
+          <span class="tag">Computer Systems</span>
+          <span class="tag">Linear Algebra</span>
+          <span class="tag">Organization of Programming Languages</span>
+          <span class="tag">Business Technology</span>
+          <span class="tag">Business Law</span>
+          <span class="tag">Marketing</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">Projects</p>
+    <div class="projects-list">
+
+      <div class="projects-subheading">Production</div>
+
+      <a class="project-card" href="https://github.com/AppleSauceCider/nesteasy-showcase" target="_blank" rel="noopener">
+        <div class="project-header">
+          <span class="project-name">NestEasy</span>
+          <span class="project-arrow">↗</span>
+        </div>
+        <p class="project-desc">
+          Multi-tenant fleet management SaaS for trucking organizations. React Native mobile app deployed to the App Store and Google Play, backed by a serverless AWS Lambda backend with Stripe subscriptions across 4 tiers and 8+ MongoDB data models.
+        </p>
+        <div class="project-tags">
+          <span class="tag">React Native</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">AWS Lambda</span>
+          <span class="tag">MongoDB</span>
+          <span class="tag">Stripe</span>
+          <span class="tag">Expo</span>
+        </div>
+      </a>
+
+      <div class="projects-subheading">Academic</div>
+
+      <div class="project-card project-card-static">
+        <div class="project-header">
+          <span class="project-name">SmallC Compiler</span>
+          <span class="project-badge">available upon request</span>
+        </div>
+        <p class="project-desc">
+          Full compiler pipeline for a statically-typed C-like language in OCaml. Includes a regex-based lexer, recursive descent parser over a right-recursive CFG, and an AST evaluator with lexical scoping, static type checking, and runtime error handling.
+        </p>
+        <div class="project-tags">
+          <span class="tag">OCaml</span>
+          <span class="tag">Lexer</span>
+          <span class="tag">Parser</span>
+          <span class="tag">AST</span>
+          <span class="tag">Evaluator</span>
+        </div>
+      </div>
+
+      <div class="project-card project-card-static">
+        <div class="project-header">
+          <span class="project-name">Shellac</span>
+          <span class="project-badge">available upon request</span>
+        </div>
+        <p class="project-desc">
+          A POSIX-style interactive shell written in C. Implements process forking, foreground and background job execution, I/O redirection, and a job lifecycle state machine tracking up to 256 concurrent jobs across INIT, RUN, EXIT, and FAIL states.
+        </p>
+        <div class="project-tags">
+          <span class="tag">C</span>
+          <span class="tag">Processes</span>
+          <span class="tag">Fork/Exec</span>
+          <span class="tag">I/O Redirection</span>
+          <span class="tag">Job Control</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label">Experience</p>
+    <div class="experience-list">
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">May 2026 &mdash; Aug. 2026</div>
+          <div class="exp-company">NRECA</div>
+        </div>
+        <div>
+          <div class="exp-role">Innovation & Emerging Tech Intern</div>
+          <ul class="exp-bullets">
+            <li>Leading field research across 5+ electric cooperatives to map data strategies and architect a data lake integration plan enabling downstream AI and BI tooling.</li>
+            <li>Building a MultiSpeak SOAP → Power BI pipeline that transforms cooperative vendor data into Power BI-compatible dataframes, packaged as a lightweight deployable script.</li>
+            <li>Building an automated technology tracker and AMI data cleansing pipeline to surface emerging grid trends and improve metering data quality.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-divider"></div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">Jan. 2025 &mdash; Aug. 2025</div>
+          <div class="exp-company">Apollonian.ai</div>
+        </div>
+        <div>
+          <div class="exp-role">Software Developer Intern</div>
+          <ul class="exp-bullets">
+            <li>Built 3 production LangChain tools automating medical research and clinical visualization workflows.</li>
+            <li>Designed and deployed scalable multistep AI agent pipelines using LangChain + GPT-4 with modular architecture and production logging.</li>
+            <li>Deployed serverless AI infrastructure via Firebase Cloud Functions with 99% uptime.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-divider"></div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">Jan. 2023 &mdash; Jan. 2024</div>
+          <div class="exp-company">Independent</div>
+        </div>
+        <div>
+          <div class="exp-role">Founder, Private Tutoring Business</div>
+          <ul class="exp-bullets">
+            <li>Grew to 6 students with personalized curricula, achieving 100% client retention and improving average performance by one letter grade.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">Contact</p>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:rudramraval@gmail.com">
+        <span class="contact-link-label">Email</span>
+        rudramraval@gmail.com
+      </a>
+      <a class="contact-link" href="https://www.linkedin.com/in/rudra-m-raval/" target="_blank" rel="noopener">
+        <span class="contact-link-label">LinkedIn</span>
+        linkedin.com/in/rudra-m-raval
+      </a>
+      <a class="contact-link" href="https://github.com/AppleSauceCider" target="_blank" rel="noopener">
+        <span class="contact-link-label">GitHub</span>
+        github.com/AppleSauceCider
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-note">Rudra Raval &mdash; 2026</span>
+    <span class="footer-note">College Park, MD</span>
+  </footer>
+
+  <script>
+    // Theme toggle
+    const toggle = document.getElementById('themeToggle');
+    const icon = document.getElementById('themeIcon');
+    const html = document.documentElement;
+
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const saved = localStorage.getItem('theme');
+    const initial = saved || (prefersDark ? 'dark' : 'light');
+    html.setAttribute('data-theme', initial);
+    icon.textContent = initial === 'dark' ? '☼' : '☾';
+
+    toggle.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      icon.textContent = next === 'dark' ? '☼' : '☾';
+      localStorage.setItem('theme', next);
+    });
+
+    // Scrollspy for active nav links
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-50% 0px -50% 0px' });
+
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>
