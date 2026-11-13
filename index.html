@@ -4,6 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rudra Raval</title>
+  <meta name="description" content="Rudra Raval — Data Engineer at NRECA and CS & Information Systems student at the University of Maryland, building lakehouse infrastructure and AI tools for electric cooperatives." />
+  <meta property="og:title" content="Rudra Raval" />
+  <meta property="og:description" content="Data Engineer at NRECA. CS & Information Systems at the University of Maryland." />
+  <meta property="og:type" content="website" />
+
+  <!-- Set theme before first paint to prevent a light/dark flash -->
+  <script>
+    (function () {
+      var t;
+      try { t = localStorage.getItem('theme'); } catch (e) {}
+      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
@@ -102,6 +116,8 @@
       display: flex;
       gap: 36px;
       list-style: none;
+      margin-left: auto;
+      margin-right: 28px;
     }
 
     .nav-links a {
@@ -136,14 +152,6 @@
       max-width: 780px;
       margin: 0 auto;
       padding: 120px 24px;
-    }
-
-    .divider {
-      width: 100%;
-      max-width: 780px;
-      margin: 0 auto;
-      height: 1px;
-      background: var(--border);
     }
 
     .section-label {
@@ -605,8 +613,10 @@
 
     /* RESPONSIVE */
     @media (max-width: 640px) {
-      nav { padding: 0 24px; }
-      .nav-links { gap: 20px; }
+      nav { padding: 10px 24px; height: auto; flex-wrap: wrap; row-gap: 8px; }
+      .nav-links { gap: 6px 14px; flex-wrap: wrap; order: 3; width: 100%; margin: 0; }
+      #hero { padding-top: 150px; }
+      .hero-detail-row { flex-direction: column; gap: 2px; }
       .about-body { grid-template-columns: 1fr; }
       .exp-item { grid-template-columns: 1fr; gap: 8px; }
       footer { flex-direction: column; gap: 8px; text-align: center; }
@@ -621,18 +631,16 @@
 
   <nav>
     <a class="nav-logo" href="#hero">Rudra Raval</a>
-    <div style="display:flex; align-items:center; gap:28px;">
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#education">Education</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-        <span id="themeIcon">☾</span>
-      </button>
-    </div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+      <span id="themeIcon">☾</span>
+    </button>
   </nav>
 
   <!-- HERO -->
@@ -642,6 +650,10 @@
       <div class="hero-detail-row">
         <span class="hero-detail-key">Currently</span>
         <span class="hero-detail-val">Data Engineer, NRECA &mdash; Arlington, VA</span>
+      </div>
+      <div class="hero-detail-row">
+        <span class="hero-detail-key">Focus</span>
+        <span class="hero-detail-val">Data infrastructure, lakehouses, and AI readiness</span>
       </div>
       <div class="hero-detail-row">
         <span class="hero-detail-key">Education</span>
@@ -665,10 +677,10 @@
     <div class="about-body">
       <div class="about-text">
         <p>
-          I'm a junior at the University of Maryland pursuing a double degree in Computer Science and Information Systems. My work spans full-stack development, mobile engineering, and AI/ML tooling.
+          I'm a junior at the University of Maryland pursuing a double degree in Computer Science and Information Systems, and a Data Engineer at NRECA. I build the data infrastructure electric cooperatives need to run analytics and AI, and I've also shipped full-stack, mobile, and AI agent software.
         </p>
         <p>
-          Outside of software, I'm interested in policy, economics, and the broader systems that technology operates within. I enjoy working at the intersection of technical and non-technical domains.
+          My Information Systems side keeps the business case in view. I care whether infrastructure actually delivers value to the organization running it, and I enjoy translating technical work for decision-makers, like presenting data infrastructure and business intelligence strategy to NRECA's BTS board.
         </p>
       </div>
       <div class="about-facts">
@@ -686,11 +698,15 @@
         </div>
         <div class="fact-row">
           <span class="fact-key">Focus</span>
-          <span class="fact-val">Full-stack, AI engineering, cloud</span>
+          <span class="fact-val">Data engineering, AI engineering, full-stack</span>
         </div>
         <div class="fact-row">
-          <span class="fact-key">Skills</span>
-          <span class="fact-val">TypeScript, Python, C, OCaml, Rust, Java, SQL</span>
+          <span class="fact-key">Languages</span>
+          <span class="fact-val">Python, SQL, TypeScript, C, OCaml, Rust, Java</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-key">Tools</span>
+          <span class="fact-val">Databricks, Power BI, AWS, LangChain, React Native, MongoDB</span>
         </div>
       </div>
     </div>
@@ -727,6 +743,81 @@
           <span class="tag">Marketing</span>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label">Experience</p>
+    <div class="experience-list">
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">Aug. 2026 &mdash; Present</div>
+          <div class="exp-company">NRECA</div>
+        </div>
+        <div>
+          <div class="exp-role">Data Engineer</div>
+          <ul class="exp-bullets">
+            <li>Designing and building Databricks lakehouse infrastructure for 3 electric cooperatives to support analytics and AI/ML workloads.</li>
+            <li>Engineering data governance into the platform with access controls, cataloging, and quality standards so each cooperative can run it reliably on its own.</li>
+            <li>Building proof-of-concept AI applications on the lakehouse for cooperative operations.</li>
+            <li>Presented to the NRECA Business &amp; Technology Strategies (BTS) board on data infrastructure and business intelligence for cooperatives.</li>
+            <li>Writing two NRECA papers: one on how lakehouse architecture enables future AI/ML use cases, and one on the infrastructure organizations need before they're AI-ready.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-divider"></div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">May 2026 &mdash; Aug. 2026</div>
+          <div class="exp-company">NRECA</div>
+        </div>
+        <div>
+          <div class="exp-role">Innovation & Emerging Tech Intern</div>
+          <ul class="exp-bullets">
+            <li>Interviewed 5+ electric cooperatives about their data strategies and drafted a data lake integration plan.</li>
+            <li>Built a MultiSpeak SOAP → Power BI pipeline that turns vendor data into Power BI-ready dataframes, packaged as a script cooperatives can deploy.</li>
+            <li>Built an AMI (smart-meter) data cleansing pipeline for load forecasting, plus an automated technology tracker for emerging grid trends.</li>
+            <li>Developed a full-stack AI application on AWS Bedrock with an Angular 17 frontend and a Node.js/LangChain backend.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-divider"></div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">Jan. 2025 &mdash; Aug. 2025</div>
+          <div class="exp-company">Apollonian.ai</div>
+        </div>
+        <div>
+          <div class="exp-role">Software Developer Intern</div>
+          <ul class="exp-bullets">
+            <li>Built 3 production LangChain tools automating medical research and clinical visualization workflows.</li>
+            <li>Designed and deployed scalable multistep AI agent pipelines using LangChain + GPT-4 with modular architecture and production logging.</li>
+            <li>Deployed serverless AI infrastructure via Firebase Cloud Functions with 99% uptime.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-divider"></div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">Jan. 2023 &mdash; Jan. 2024</div>
+          <div class="exp-company">Independent</div>
+        </div>
+        <div>
+          <div class="exp-role">Founder, Private Tutoring Business</div>
+          <ul class="exp-bullets">
+            <li>Grew to 6 students with personalized curricula, achieving 100% client retention and improving average performance by one letter grade.</li>
+          </ul>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -795,80 +886,6 @@
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <p class="section-label">Experience</p>
-    <div class="experience-list">
-
-      <div class="exp-item">
-        <div class="exp-meta">
-          <div class="exp-date">Aug. 2026 &mdash; Present</div>
-          <div class="exp-company">NRECA</div>
-        </div>
-        <div>
-          <div class="exp-role">Data Engineer</div>
-          <ul class="exp-bullets">
-            <li>Designing and building Databricks lakehouse infrastructure for 3 electric cooperatives to support analytics and AI/ML workloads.</li>
-            <li>Engineering data governance into the platform with access controls, cataloging, and quality standards so each cooperative can run it reliably on its own.</li>
-            <li>Building proof-of-concept AI applications on the lakehouse for cooperative operations.</li>
-            <li>Writing two NRECA papers: one on how lakehouse architecture enables future AI/ML use cases, and one on the infrastructure organizations need before they're AI-ready.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="exp-divider"></div>
-
-      <div class="exp-item">
-        <div class="exp-meta">
-          <div class="exp-date">May 2026 &mdash; Aug. 2026</div>
-          <div class="exp-company">NRECA</div>
-        </div>
-        <div>
-          <div class="exp-role">Innovation & Emerging Tech Intern</div>
-          <ul class="exp-bullets">
-            <li>Interviewed 5+ electric cooperatives about their data strategies and drafted a data lake integration plan.</li>
-            <li>Built a MultiSpeak SOAP → Power BI pipeline that turns vendor data into Power BI-ready dataframes, packaged as a script cooperatives can deploy.</li>
-            <li>Built an AMI (smart-meter) data cleansing pipeline for load forecasting, plus an automated technology tracker for emerging grid trends.</li>
-            <li>Worked on a full-stack AI application (AWS Bedrock, Angular 17, Node.js/LangChain) and researched large-load tariffs across cooperatives.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="exp-divider"></div>
-
-      <div class="exp-item">
-        <div class="exp-meta">
-          <div class="exp-date">Jan. 2025 &mdash; Aug. 2025</div>
-          <div class="exp-company">Apollonian.ai</div>
-        </div>
-        <div>
-          <div class="exp-role">Software Developer Intern</div>
-          <ul class="exp-bullets">
-            <li>Built 3 production LangChain tools automating medical research and clinical visualization workflows.</li>
-            <li>Designed and deployed scalable multistep AI agent pipelines using LangChain + GPT-4 with modular architecture and production logging.</li>
-            <li>Deployed serverless AI infrastructure via Firebase Cloud Functions with 99% uptime.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="exp-divider"></div>
-
-      <div class="exp-item">
-        <div class="exp-meta">
-          <div class="exp-date">Jan. 2023 &mdash; Jan. 2024</div>
-          <div class="exp-company">Independent</div>
-        </div>
-        <div>
-          <div class="exp-role">Founder, Private Tutoring Business</div>
-          <ul class="exp-bullets">
-            <li>Grew to 6 students with personalized curricula, achieving 100% client retention and improving average performance by one letter grade.</li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
   <!-- CONTACT -->
   <section id="contact">
     <p class="section-label">Contact</p>
@@ -889,7 +906,7 @@
   </section>
 
   <footer>
-    <span class="footer-note">Rudra Raval &mdash; 2026</span>
+    <span class="footer-note">Rudra Raval &mdash; <span id="year">2026</span></span>
     <span class="footer-note">College Park, MD</span>
   </footer>
 
@@ -899,19 +916,18 @@
     const icon = document.getElementById('themeIcon');
     const html = document.documentElement;
 
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const saved = localStorage.getItem('theme');
-    const initial = saved || (prefersDark ? 'dark' : 'light');
-    html.setAttribute('data-theme', initial);
-    icon.textContent = initial === 'dark' ? '☼' : '☾';
+    // Theme is already set in <head>; just sync the icon
+    icon.textContent = html.getAttribute('data-theme') === 'dark' ? '☼' : '☾';
 
     toggle.addEventListener('click', () => {
       const current = html.getAttribute('data-theme');
       const next = current === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', next);
       icon.textContent = next === 'dark' ? '☼' : '☾';
-      localStorage.setItem('theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
     });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
 
     // Scrollspy for active nav links
     const sections = document.querySelectorAll('section[id]');
